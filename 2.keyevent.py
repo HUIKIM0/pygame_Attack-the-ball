@@ -52,6 +52,12 @@ character_go_x = 0
 character_speed = 5
 
 
+# 무기 만들기
+weapon = pygame.image.load(os.path.join(image_path, "weapon.png"))
+
+weapon_size = weapon.get_rect().size
+weapon_width = weapon_size[0]
+
 # ●무기는 한 번에 여러 발 발사 가능(list로 처리)
 weapons = []
 
@@ -83,11 +89,10 @@ while running:
                 character_go_x -= character_speed
             elif event.key == pygame.K_RIGHT:
                 character_go_x += character_speed
-
-            elif event.type == pygame.K_SPACE: # 무기 발사 
-                weapon_x_pos = character_x_pos + (character_width/2)  # 무기는 캐릭터의 중앙에서 나오게
+            elif event.key == pygame.K_SPACE: # 무기 발사 
+                weapon_x_pos = character_x_pos +  (character_width/2) - (weapon_width/2) # 무기는 캐릭터의 중앙에서 나옴
                 weapon_y_pos = character_y_pos  # 캐릭터의 바로 위에서 발사되게
-                weapons.append = ([weapon_x_pos, weapon_y_pos])  # list의 형태로 weapons list에 x좌표 y좌표 추가
+                weapons.append([weapon_x_pos, weapon_y_pos])  # list의 형태로 weapons list에 x좌표 y좌표 추가
                                                                  # 무기를 여러번 쏘면 쏠수록 이런 값들이 계속 추가됨
                                                                 
         # ●사용자가 손을 땜
@@ -110,7 +115,7 @@ while running:
     # 공격시 무기 위치 위로 올라가게 변경. 한줄 for문 [ i for i in 변수명]
     # 0번째 인덱스의 값, 1번째 인덱스의 값 에서 weapon_speed만큼 빼기
     # 위로 올라갈수록 0에 가까워지니까, x는 그대로 두고 y는 스피드만큼 빼야함
-    weapons = [ [up[0],up[1] - weapon_speed] for up in weapons]  # ★
+    weapons = [ [up[0], up[1] - weapon_speed] for up in weapons]  # ★
 
     # ★4. 충돌 처리
 
@@ -119,9 +124,9 @@ while running:
     screen.blit(stage,(0,(screen_height-stage_height))) # 0,430
     screen.blit(character,(character_x_pos,character_y_pos))
 
-    # list weapons에 담긴 개수 만큼 스크린에 그려준다
-    for weapon_x_pos,weapons_y_pos in weapons:
-        screen.blit(weapons,(weapon_x_pos,weapon_y_pos))
+    # list weapons에 담긴 개수 만큼 weapon.png를 그려준다
+    for weapon_x_pos,weapon_y_pos in weapons:
+        screen.blit(weapon,(weapon_x_pos,weapon_y_pos))
 
     pygame.display.update()
 
