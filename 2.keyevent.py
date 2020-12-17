@@ -109,6 +109,7 @@ while running:
 
     # 공격시 무기 위치 위로 올라가게 변경. 한줄 for문 [ i for i in 변수명]
     # 0번째 인덱스의 값, 1번째 인덱스의 값 에서 weapon_speed만큼 빼기
+    # 위로 올라갈수록 0에 가까워지니까, x는 그대로 두고 y는 스피드만큼 빼야함
     weapons = [ [up[0],up[1] - weapon_speed] for up in weapons]  # ★
 
     # ★4. 충돌 처리
