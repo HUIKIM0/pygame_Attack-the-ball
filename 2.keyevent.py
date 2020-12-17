@@ -121,12 +121,14 @@ while running:
 
     # ★5. 화면에 그리기
     screen.blit(background,(0,0))
-    screen.blit(stage,(0,(screen_height-stage_height))) # 0,430
-    screen.blit(character,(character_x_pos,character_y_pos))
 
     # list weapons에 담긴 개수 만큼 weapon.png를 그려준다
     for weapon_x_pos,weapon_y_pos in weapons:
         screen.blit(weapon,(weapon_x_pos,weapon_y_pos))
+
+    screen.blit(stage,(0,(screen_height-stage_height))) # 0,430
+    screen.blit(character,(character_x_pos,character_y_pos))
+
 
     pygame.display.update()
 
