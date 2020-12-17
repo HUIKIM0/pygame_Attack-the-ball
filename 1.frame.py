@@ -91,6 +91,5 @@ while running:
 
 
 
-            
 pygame.time.delay(1500)
 pygame.quit()
