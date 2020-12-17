@@ -56,7 +56,7 @@ character_speed = 5
 weapons = []
 
 # 무기의 이동 속도
-weapons_speed = 10
+weapon_speed = 10
 
 
 # ●공 만들기 (4개 크기에 대해 따로 처리.list)
@@ -107,8 +107,9 @@ while running:
         character_x_pos = screen_width - character_width     
 
 
-    # 공격시 무기 위치 위로 올라가게 변경
-    
+    # 공격시 무기 위치 위로 올라가게 변경. 한줄 for문 [ i for i in 변수명]
+    # 0번째 인덱스의 값, 1번째 인덱스의 값 에서 weapon_speed만큼 빼기
+    weapons = [ [up[0],up[1] - weapon_speed] for up in weapons]  # ★
 
     # ★4. 충돌 처리
 
