@@ -67,11 +67,30 @@ weapon_speed = 10
 
 # ●공 만들기 (4개 크기에 대해 따로 처리.list)
 ball_images = [
-    pygame.image.load(os.path.join(image_path,"balloon1.png")),
-    pygame.image.load(os.path.join(image_path,"balloon2.png")),
-    pygame.image.load(os.path.join(image_path,"balloon3.png")),
-    pygame.image.load(os.path.join(image_path,"balloon4.png"))
+    pygame.image.load(os.path.join(image_path,"balloon1.png")), # -18(공이 제일 큼)
+    pygame.image.load(os.path.join(image_path,"balloon2.png")), # -15
+    pygame.image.load(os.path.join(image_path,"balloon3.png")), # -12
+    pygame.image.load(os.path.join(image_path,"balloon4.png"))  # -9
 ]
+
+
+# 공 크기에 따른 최초 스피드
+# 공이 튀겨졌을때 y값이 -가 되어야 위로 올라간다
+ball_speed_y = [-18, -15, -12, -9]  # index 0,1,2,3에 해당
+
+# 공 배열. 공도 무기처럼 자꾸 늘어남! 쪼개지기 때문에.. 그래서 list로 관리
+balls = []
+
+# dictionary{}
+# 가장 큰 공(최초 발생 공) list에 추가
+balls.append({
+    "pos_x":50,  # 공의 x좌표
+    "pos_y":50,  # 공의 y좌표
+    "img_idx":0, # 공의 이미지 인덱스(처음에는 가장 큰 공 balloon1)
+    "to_x":3, # x축 이동 방향. 3이면 오른쪽 -3이면 왼쪽
+    "to_y": -6,  # y축 이동방향
+    "init_spd_y": ball_speed_y[0] # y 최초속도
+})
 
 
 running = True  # 게임이 진행중인가?
