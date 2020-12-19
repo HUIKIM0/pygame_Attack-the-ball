@@ -153,30 +153,47 @@ while running:
         ball_width = ball_size[0]
         ball_height = ball_size[1]
 
-        # 공이 튕겨지다가 벽에 닿으면 안 벗어나고 반대쪽으로 튕겨나가는 효과를 주기 위함
+        # ★
+        # 공이 튕겨지다가 가로벽에 닿으면 안 벗어나고 반대쪽으로 튕겨나가는 효과를 주기 위함
         if ball_pos_x < 0 or ball_pos_x > screen_width - ball_width:
             ball_val["go_x"] = ball_val["go_x"] * -1  # 3이였으면 -3으로(왼쪽). -3이였으면 3으로(오른쪽)
+
+        # 세로 위치. 스테이지에 닿으면 튕김처리 -> 공 속도 줄여나감(통!!통..통....느낌위해)
+        if ball_pos_y >= screen_height - stage_height - ball_height:
+            ball_val["go_y"] = ball_val["init_spd_y"]  # 스테이지에 닿으면 공이 튕겨지는 속도는 최초속도(init_spd_y)
+        else:  # 스테이지에 튕겨지고 올라간 후의 올라가고 내려가는 처리
+            ball_val["go_y"] +=0.5   # go_y의 초기값은 -6. -5.5, -5 .. 위로 가다가 0이되면 +가 되서 아래로 떨어짐 
+
+        ball_val["pos_x"] += ball_val["go_x"]
+        ball_val["pos_y"] += ball_val["go_y"]
 
 
 
 
     # ★4. 충돌 처리
 
-    # ★5. 화면에 그리기
+    # ★5. 화면에 그리기(이미지,(좌표,좌표))
     screen.blit(background,(0,0))
 
     # list weapons에 담긴 개수 만큼 weapon.png를 그려준다
     for weapon_x_pos,weapon_y_pos in weapons:
         screen.blit(weapon,(weapon_x_pos,weapon_y_pos))
+   
+    
+    for idx, val in enumerate(balls):
+        ball_pos_x = val["pos_x"]
+        ball_pos_y = val["pos_y"]
+        ball_img_idx = val["img_idx"]
+
+        screen.blit(ball_images[ball_img_idx], (ball_pos_x, ball_pos_y))
 
     screen.blit(stage,(0,(screen_height-stage_height))) # 0,430
     screen.blit(character,(character_x_pos,character_y_pos))
-
+    
 
     pygame.display.update()
 
 
 
-            
 pygame.time.delay(1500)
 pygame.quit()

@@ -137,8 +137,9 @@ while running:
     weapons = [ [up[0], up[1] - weapon_speed] for up in weapons]  # ★
 
     # 천장에 닿은 무기 없애기
-    # y좌표가 0보다 크다 -> 
-    weapons = [ [c[0], c[1]] for c in weapons if c[1] > 0]
+    # y좌표가 0보다 크다 -> 천장에 닿지 않았다
+    # 천장에 닿지 않은 것만 리스트로 만들어서 다시 저장
+    weapons = [ [up[0], up[1]] for up in weapons if c[1] > 0]
 
     # ★4. 충돌 처리
 
