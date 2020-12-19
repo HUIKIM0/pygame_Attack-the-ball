@@ -87,8 +87,8 @@ balls.append({
     "pos_x":50,  # 공의 x좌표
     "pos_y":50,  # 공의 y좌표
     "img_idx":0, # 공의 이미지 인덱스(처음에는 가장 큰 공 balloon1)
-    "to_x":3, # x축 이동 방향. 3이면 오른쪽 -3이면 왼쪽
-    "to_y": -6,  # y축 이동방향
+    "go_x":3, # x축 이동 방향. 3이면 오른쪽 -3이면 왼쪽
+    "go_y": -6,  # y축 이동방향
     "init_spd_y": ball_speed_y[0] # y 최초속도
 })
 
@@ -108,6 +108,7 @@ while running:
                 character_go_x -= character_speed
             elif event.key == pygame.K_RIGHT:
                 character_go_x += character_speed
+
             elif event.key == pygame.K_SPACE: # 무기 발사 
                 weapon_x_pos = character_x_pos +  (character_width/2) - (weapon_width/2) # 무기는 캐릭터의 중앙에서 나옴
                 weapon_y_pos = character_y_pos  # 캐릭터의 바로 위에서 발사되게
@@ -140,6 +141,24 @@ while running:
     # y좌표가 0보다 크다 -> 천장에 닿지 않았다
     # 천장에 닿지 않은 것만 리스트로 만들어서 다시 저장
     weapons = [ [up[0], up[1]] for up in weapons if c[1] > 0]
+
+    # ● 공 위치 정의
+    # enumerate -> 인덱스와 그에 해당하는 값을 보여줌
+    for ball_idx, ball_val in enumerate(balls):
+        ball_pos_x = ball_val["pos_x"] # x좌표
+        ball_pos_y = ball_val["pos_y"]
+        ball_img_idx = ball_val["img_idx"]
+
+        ball_size = ball_images[ball_img_idx].get_rect().size  # ball_images=[]
+        ball_width = ball_size[0]
+        ball_height = ball_size[1]
+
+        # 공이 튕겨지다가 벽에 닿으면 안 벗어나고 반대쪽으로 튕겨나가는 효과를 주기 위함
+        if ball_pos_x < 0 or ball_pos_x > screen_width - ball_width:
+            ball_val["go_x"] = ball_val["go_x"] * -1  # 3이였으면 -3으로(왼쪽). -3이였으면 3으로(오른쪽)
+
+
+
 
     # ★4. 충돌 처리
 
