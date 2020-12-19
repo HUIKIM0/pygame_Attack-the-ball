@@ -26,18 +26,18 @@ background = pygame.image.load(os.path.join(image_path,"background.png"))
 
 
 # ●스테이지 만들기(캐릭터가 서 있는 땅 같은 공간)
-# 스테이지의 사이즈 정보를 알아내야 함
+# ★스테이지의 사이즈 정보를 알아내야 함
 # 스테이지의 높이를 계산해서 그 높이에 맞게 공을 튕긴다던지, 캐릭터를 위치시킨다던지..
 stage = pygame.image.load(os.path.join(image_path,"stage.png"))
 
-stage_size = stage.get_rect().size # 스테이지의 사이즈 정보
+stage_size = stage.get_rect().size # 스테이지 이미지의 사이즈 정보
 stage_height = stage_size[1] # stage_size[1]은 height, 0은 width. 스테이지의 위에 캐릭터를 두기위해 높이 필요
 
 
 # ●캐릭터 만들기
 character = pygame.image.load(os.path.join(image_path,"character.png"))
 
-character_size = character.get_rect().size # 캐릭터의 사이즈 정보
+character_size = character.get_rect().size # ★캐릭터 이미지의 사이즈 정보
 
 character_width = character_size[0]
 character_height = character_size[1]   
@@ -55,7 +55,7 @@ character_speed = 5
 # 무기 만들기
 weapon = pygame.image.load(os.path.join(image_path, "weapon.png"))
 
-weapon_size = weapon.get_rect().size
+weapon_size = weapon.get_rect().size  # ★무기의 이미지 사이즈정보
 weapon_width = weapon_size[0]
 
 # ●무기는 한 번에 여러 발 발사 가능(list로 처리)
@@ -145,11 +145,11 @@ while running:
     # ● 공 위치 정의
     # enumerate -> 인덱스와 그에 해당하는 값을 보여줌
     for ball_idx, ball_val in enumerate(balls):
-        ball_pos_x = ball_val["pos_x"] # x좌표
-        ball_pos_y = ball_val["pos_y"]
-        ball_img_idx = ball_val["img_idx"]
+        ball_pos_x = ball_val["pos_x"] # balls = []에 있는 x값(50)
+        ball_pos_y = ball_val["pos_y"]  # 50
+        ball_img_idx = ball_val["img_idx"]  # 0
 
-        ball_size = ball_images[ball_img_idx].get_rect().size  # ball_images=[]
+        ball_size = ball_images[ball_img_idx].get_rect().size  # ball_images=[] ★공 이미지 사이즈 정보
         ball_width = ball_size[0]
         ball_height = ball_size[1]
 
@@ -160,7 +160,7 @@ while running:
 
         # 세로 위치. 스테이지에 닿으면 튕김처리 -> 공 속도 줄여나감(통!!통..통....느낌위해)
         if ball_pos_y >= screen_height - stage_height - ball_height:
-            ball_val["go_y"] = ball_val["init_spd_y"]  # 스테이지에 닿으면 공이 튕겨지는 속도는 최초속도(init_spd_y)
+            ball_val["go_y"] = ball_val["init_spd_y"]  # 스테이지에 닿으면 공이 튕겨지는 높이는 최초속도(init_spd_y)값
         else:  # 스테이지에 튕겨지고 올라간 후의 올라가고 내려가는 처리
             ball_val["go_y"] +=0.5   # go_y의 초기값은 -6. -5.5, -5 .. 위로 가다가 0이되면 +가 되서 아래로 떨어짐 
 
