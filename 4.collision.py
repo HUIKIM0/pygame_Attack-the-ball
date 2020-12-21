@@ -89,7 +89,7 @@ balls.append({
     "img_idx":0, # 공의 이미지 인덱스(처음에는 가장 큰 공 balloon1)
     "go_x":3, # x축 이동 방향. 3이면 오른쪽 -3이면 왼쪽
     "go_y": -6,  # y축 이동방향
-    "init_spd_y": ball_speed_y[0] # y 최초속도
+    "init_spd_y": ball_speed_y[0] # y 최초속도. -18
 })
 
 
