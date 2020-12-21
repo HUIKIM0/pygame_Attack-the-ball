@@ -67,7 +67,7 @@ weapon_speed = 10
 
 # ●공 만들기 (4개 크기에 대해 따로 처리.list)
 ball_images = [
-    pygame.image.load(os.path.join(image_path,"balloon1.png")), # -18(공이 제일 큼)
+    pygame.image.load(os.path.join(image_path,"balloon1.png")), # -18
     pygame.image.load(os.path.join(image_path,"balloon2.png")), # -15
     pygame.image.load(os.path.join(image_path,"balloon3.png")), # -12
     pygame.image.load(os.path.join(image_path,"balloon4.png"))  # -9
