@@ -211,7 +211,16 @@ while running:
                 # 해당 인덱스의 무기 없애기 위해 값 설정
                 weapon_to_remove = weapon_idx  
                 # 해당 인덱스의 공 없애기 위해 값 설정
-                ball_to_remove = ball_idx  
+                ball_to_remove = ball_idx 
+                
+                # 가장 작은 공이 아니였다면, 그 다음 공으로 나눠주기
+                if ball_img_idx > 3:
+                    # 현재 공 크기(가로세로) 정보를 가져옴. img니까 rect.size
+                    ball_width = ball_rect.size[0]
+                    ball_height = ball_rect.size[1]
+                    
+
+
                 break
 
     # ★충돌된 공 or 무기 없애기★
