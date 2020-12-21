@@ -140,7 +140,7 @@ while running:
     # 천장에 닿은 무기 없애기
     # y좌표가 0보다 크다 -> 천장에 닿지 않았다
     # 천장에 닿지 않은 것만 리스트로 만들어서 다시 저장
-    weapons = [ [up[0], up[1]] for up in weapons if c[1] > 0]
+    weapons = [ [up[0], up[1]] for up in weapons if up[1] > 0]
 
     # ● 공 위치 정의
     # enumerate -> 인덱스와 그에 해당하는 값을 보여줌

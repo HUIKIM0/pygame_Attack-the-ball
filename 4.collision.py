@@ -93,6 +93,11 @@ balls.append({
 })
 
 
+# 사라질 무기, 공 정보 저장 변수(부딪히면 사라지게 처리해야 하므로)
+weapon_to_remove = -1
+ball_to_remove = -1
+
+
 running = True  # 게임이 진행중인가?
 while running:
     dt = clock.tick(30)  # 게임화면의 초당 프레임 수를 설정
@@ -140,7 +145,7 @@ while running:
     # 천장에 닿은 무기 없애기
     # y좌표가 0보다 크다 -> 천장에 닿지 않았다
     # 천장에 닿지 않은 것만 리스트로 만들어서 다시 저장
-    weapons = [ [up[0], up[1]] for up in weapons if c[1] > 0]
+    weapons = [ [up[0], up[1]] for up in weapons if up[1] > 0]
 
     # ● 공 위치 정의
     # enumerate -> 인덱스와 그에 해당하는 값을 보여줌
@@ -169,6 +174,59 @@ while running:
 
 
     # ★4. 충돌 처리
+
+    # 캐릭터 rect 정보 업데이트
+    character_rect = character.get_rect()
+    character_rect.left = character_x_pos
+    character_rect.top = character_y_pos
+
+    # 공
+    for ball_idx, ball_val in enumerate(balls):
+        ball_pos_x = ball_val["pos_x"]
+        ball_pos_y = ball_val["pos_y"]
+        ball_img_idx = ball_val["img_idx"]
+
+        # 공 rect 정보 업데이트
+        ball_rect = ball_images[ball_img_idx].get_rect()
+        ball_rect.left = ball_pos_x
+        ball_rect.top = ball_pos_y
+
+        # 공과 캐릭터 충돌 체크(충돌 시 게임종료)
+        if character_rect.colliderect(ball_rect):
+            running = False
+            break
+
+        # 공과 무기들 충돌 처리(충돌 시 사라져야함)
+        for weapon_idx, weapon_val in enumerate(weapons):
+            weapon_pos_x = weapon_val[0]
+            weapon_pos_y = weapon_val[1]
+
+            # 무기 rect 정보 업데이트
+            weapon_rect = weapon.get_rect()
+            weapon_rect.left = weapon_pos_x
+            weapon_rect.top = weapon_pos_y
+
+            # 충돌 체크
+            if weapon_rect.colliderect(ball_rect):
+                # 해당 인덱스의 무기 없애기 위해 값 설정
+                weapon_to_remove = weapon_idx  
+                # 해당 인덱스의 공 없애기 위해 값 설정
+                ball_to_remove = ball_idx  
+                break
+
+    # ★충돌된 공 or 무기 없애기★
+    # ●ball_to_remove와 weapon_to_remove의 초기값은 -1임
+    # ●인덱스는 0부터 시작..ball_to_remove과 weapon_to_remove의 값이 -1보다 크다?
+    # ●충돌 체크 작업을 마쳤다는 뜻! 제거대상
+    if ball_to_remove > -1:  
+        del balls[ball_to_remove]  # 공 list의 해당 인덱스 제거 
+        ball_to_remove = -1
+
+    if weapon_to_remove > -1:
+        del weapons[weapon_to_remove]  # 무기 list의 해당 인덱스 제거
+        weapon_to_remove = -1
+
+
 
     # ★5. 화면에 그리기(이미지,(좌표,좌표))
     screen.blit(background,(0,0))
