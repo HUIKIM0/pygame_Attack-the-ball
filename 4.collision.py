@@ -186,7 +186,7 @@ while running:
         ball_pos_y = ball_val["pos_y"]
         ball_img_idx = ball_val["img_idx"]
 
-        # 공 rect 정보 업데이트
+        # 공 rect 정보 업데이트. 리스트 ball_images
         ball_rect = ball_images[ball_img_idx].get_rect()
         ball_rect.left = ball_pos_x
         ball_rect.top = ball_pos_y
@@ -214,13 +214,37 @@ while running:
                 ball_to_remove = ball_idx 
                 
                 # 가장 작은 공이 아니였다면, 그 다음 공으로 나눠주기
-                if ball_img_idx > 3:
-                    # 현재 공 크기(가로세로) 정보를 가져옴. img니까 rect.size
-                    ball_width = ball_rect.size[0]
+                # 현재 인덱스의 공 ball_img_idx
+                if ball_img_idx < 3:
+
+                    # 현재 공 크기(가로세로) 정보를 가져옴. 공 rect정보 업데이트 된것의 사이즈
+                    ball_width = ball_rect.size[0]  
                     ball_height = ball_rect.size[1]
                     
+                    # 나눠진 공 정보.
+                    next_ball_rect = ball_images[ball_img_idx +1].get_rect()
+                    next_ball_width = next_ball_rect.size[0]
+                    next_ball_height = next_ball_rect.size[1]
 
+                    # 왼쪽으로 튕겨나가는 작은 공
+                    balls.append({
+                        "pos_x": ball_pos_x + (ball_width/2) - (next_ball_width/2),
+                        "pos_y": ball_pos_y + (ball_height/2) - (next_ball_height/2),
+                        "img_idx": ball_img_idx + 1, # 지금 크기보다 작아진 크기의 img idx를 참조
+                        "go_x": -3, # x축 이동 방향. 3이면 오른쪽 -3이면 왼쪽
+                        "go_y": -6,  # y축 이동방향
+                        "init_spd_y": ball_speed_y[ball_img_idx + 1] # 공 사이즈에 따른 최초 스피드를 다음 idx로 넘김
+                    })
 
+                    # 오른쪽으로 튕겨나가는 작은 공
+                    balls.append({
+                        "pos_x": ball_pos_x + (ball_width/2) - (next_ball_width/2),
+                        "pos_y": ball_pos_y + (ball_height/2) - (next_ball_height/2),
+                        "img_idx": ball_img_idx + 1,
+                        "go_x": 3, # x축 이동 방향. 3이면 오른쪽 -3이면 왼쪽
+                        "go_y": -6,  # y축 이동방향
+                        "init_spd_y": ball_speed_y[ball_img_idx + 1]
+                    })
                 break
 
     # ★충돌된 공 or 무기 없애기★
