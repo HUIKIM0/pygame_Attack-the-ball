@@ -192,7 +192,7 @@ while running:
     character_rect.left = character_x_pos
     character_rect.top = character_y_pos
 
-    # 공
+    # 공이 캐릭터와 충돌했는지 봐야함
     for ball_idx, ball_val in enumerate(balls):
         ball_pos_x = ball_val["pos_x"]
         ball_pos_y = ball_val["pos_y"]
@@ -208,6 +208,7 @@ while running:
             running = False
             break    # 해당 for 탈출
 
+        # ★★
         # 공과 무기들 충돌 처리(충돌 시 사라져야함)
         for weapon_idx, weapon_val in enumerate(weapons):
             weapon_pos_x = weapon_val[0]
@@ -259,6 +260,12 @@ while running:
                         "init_spd_y": ball_speed_y[ball_img_idx + 1]
                     })
                 break  # 해당 for 탈출
+        else: 
+            continue   # 안쪽 for문의 조건에 맞지 않으면 continue를 하여, 바깥쪽 for문으로! 계속수행
+
+        break   # 안쪽 for문에서 break를 만나면 여기로 옴. 2중 for문 탈출
+
+        
 
     # ★충돌된 공 or 무기 없애기★
     # ●ball_to_remove와 weapon_to_remove의 초기값은 -1임
