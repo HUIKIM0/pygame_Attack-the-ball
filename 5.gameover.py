@@ -49,7 +49,8 @@ character_y_pos = screen_height - character_height - stage_height # 스테이지
 
 
 # 캐릭터 이동 방향 (가로로만 움직임). keyevent를 위함!!
-character_go_x = 0
+character_go_x_LETF = 0
+character_go_x_RIGHT = 0
 
 # 캐릭터의 이동 속도
 character_speed = 5
@@ -118,9 +119,9 @@ while running:
         # ●키보드에 입력 들어옴
         if event.type == pygame.KEYDOWN:  
             if event.key == pygame.K_LEFT:
-                character_go_x -= character_speed
+                character_go_x_LETF -= character_speed
             elif event.key == pygame.K_RIGHT:
-                character_go_x += character_speed
+                character_go_x_RIGHT += character_speed
 
             elif event.key == pygame.K_SPACE: # 무기 발사 
                 weapon_x_pos = character_x_pos +  (character_width/2) - (weapon_width/2) # 무기는 캐릭터의 중앙에서 나옴
@@ -130,13 +131,16 @@ while running:
                                                                 
         # ●사용자가 손을 땜
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-               character_go_x = 0
+            if event.key == pygame.K_LEFT:
+               character_go_x_LETF = 0
+            elif event.key == pygame.K_RIGHT:
+                character_go_x_RIGHT = 0
 
                 
     
     # ★3. 게임 캐릭터 위치 정의
-    character_x_pos += character_go_x  # x위치에 키보드 입력으로 인해 변한 값을 더해줌(캐릭터 위치 지정)
+    # x위치에 키보드 입력으로 인해 변한 값을 더해줌(캐릭터 위치 지정)
+    character_x_pos += character_go_x_LETF + character_go_x_RIGHT 
     
     # 캐릭터가 화면에 벗어나지 않게 처리
     if character_x_pos < 0:
