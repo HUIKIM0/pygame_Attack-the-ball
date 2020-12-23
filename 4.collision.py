@@ -278,10 +278,9 @@ while running:
 
     screen.blit(stage,(0,(screen_height-stage_height))) # 0,430
     screen.blit(character,(character_x_pos,character_y_pos))
-    
+
 
     pygame.display.update()
-
 
 
 pygame.time.delay(1500)
